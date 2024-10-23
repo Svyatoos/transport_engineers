@@ -1,5 +1,10 @@
+import os
+import pandas as pd
 from typing import List
 import numpy as np
+import matplotlib.pyplot as plt
+
+# Определение класса Perceptron как в вашем коде...
 
 class Perceptron:       #класс персептрон
     eta: float          #скорость обучения между 0.0 и 1.0
@@ -55,7 +60,33 @@ class Perceptron:       #класс персептрон
     def predict(self, x):
         #Возвращает метки класса после шага
         return np.where(self.net_input(x)>=0.0, 1, 0)
-    
 
+
+
+
+
+s = 'iris.data'
+df = pd.read_csv(s, header=None, encoding='utf-8')
+print(df.tail())
+
+y = df.iloc[0:100, 4].values
+y = np.where(y == 'Iris-setosa', 0, 1)
+x = df.iloc[0:100, [0, 2]].values
+
+plt.scatter(x[:50, 0], x[:50, 1], color='red', marker='o', label='Setosa')
+plt.scatter(x[50:100, 0], x[50:100, 1], color='blue', marker='s', label='Versicolor')
+
+plt.xlabel('Length of sepal [cm]')
+plt.ylabel('Length of petal [cm]')
+plt.legend(loc='upper left')
+plt.show()
+
+ppn=Perceptron(eta=0.1, n_iter=10)
+ppn.fit(x, y)
+plt.plot(range(1, len(ppn.errors_)+1), ppn.errors_, marker='o')
+plt.xlabel('Эпохи')
+plt.ylabel('Количество обновлений')
+plt.show()
 
 print("OK")
+
