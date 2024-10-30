@@ -1,6 +1,7 @@
 # подключаем библиотеки
 import cv2
 #import matplotlib.pyplot as plt
+#from deepface import DeepFace
 
 
 # функция определения лиц
@@ -73,6 +74,18 @@ while cv2.waitKey(1)<0:
     #    imageFace это переменная с изоброжением 
     #    там горантировоно тока лицо
     #    тута твой код
+
+def face_id(img_1, folder_img_2):
+    try:
+        result = DeepFace.find(img_path = img_1, db_path = folder_img_2)
+        return result
+    except Exception as ex:
+        return ex
+if __name__ == '__main__':
+    img1_path = input("Введите путь к первому изображению: ")
+    folder_img2_path = input("Введите путь к папке с изображениями: ")
+    face_similar = face_id(img1_path, folder_img2_path)
+    print(face_similar)
     
     cv2.imshow("Face detection", imageFace) #это вывод изоброжения литца    
     
