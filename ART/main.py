@@ -52,6 +52,7 @@ faceNet=cv2.dnn.readNet(faceModel,faceProto)
 # получаем видео с камеры
 video=cv2.VideoCapture(0)
 # пока не нажата любая клавиша — выполняем цикл
+"""
 while cv2.waitKey(1)<0:
     # получаем очередной кадр с камеры
     hasFrame,frame=video.read()
@@ -74,7 +75,7 @@ while cv2.waitKey(1)<0:
     #    imageFace это переменная с изоброжением 
     #    там горантировоно тока лицо
     #    тута твой код
-
+"""
 def face_id(img_1, folder_img_2):
     try:
         result = DeepFace.find(img_path = img_1, db_path = folder_img_2)
@@ -87,7 +88,7 @@ if __name__ == '__main__':
     face_similar = face_id(img1_path, folder_img2_path)
     print(face_similar)
     
-    cv2.imshow("Face detection", imageFace) #это вывод изоброжения литца    
+   #1 cv2.imshow("Face detection", imageFace) #это вывод изоброжения литца    
     
     
     
@@ -103,7 +104,3 @@ if __name__ == '__main__':
     #
     
    
-
-
-
-
