@@ -49,7 +49,7 @@ def process_image(image_path):
         cv2.putText(image, str(int(fps)), (10, 30), cv2.FONT_HERSHEY_PLAIN, 2, (255, 0, 0), 2)  # ФреймРейт
 
         cv2.imshow('python', image)
-        cv2.waitKey(50)  # Ждем 1 мс для обновления окна
+        cv2.waitKey(1)  # Ждем 1 мс для обновления окна
 
         return points
 
@@ -82,7 +82,7 @@ if __name__ == "__main__":
 
         
 
-        with open('dataset.data', 'w', encoding='utf-8') as file:
+        with open('dataset.csv', 'w', encoding='utf-8') as file:
                 for z in range(num_images):
                     image_path = os.path.join(folder_path, image_names[z])
                     processed_points = process_image(image_path)
@@ -90,10 +90,11 @@ if __name__ == "__main__":
                     vrem=image_names[z].split()
                     im=vrem[4].replace('.jpg', '')
                     for id in range(p):
-                        line += f"{processed_points[0][id]}, {processed_points[1][id]}; "
-                    if im == "нейтральная":
+                        line += f"{processed_points[0][id]},{processed_points[1][id]},"
+                    """if im == "нейтральная":
                         im="нейтральное"
-                    line+=f"{vrem[2]}, {im}"
+                    line+=f"{vrem[2]}, {im}"""
+                    line+=f"{vrem[2]}"
                     file.write(line + '\n')
 
         """while True:
