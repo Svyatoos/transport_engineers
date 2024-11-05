@@ -41,7 +41,7 @@ def process_image(image_path):
                 cx, cy = int(landmark.x * w), int(landmark.y * h)
                 points[0][id] = cx
                 points[1][id] = cy
-                #print(f'Landmark {id}: ({cx}, {cy})')  # Отключено для повышения производительности
+                #print(f'Landmark {id}: ({cx}, {cy})')  
 
         cTime = time.time()
         fps = 1 / (cTime - pTime)
@@ -49,7 +49,7 @@ def process_image(image_path):
         cv2.putText(image, str(int(fps)), (10, 30), cv2.FONT_HERSHEY_PLAIN, 2, (255, 0, 0), 2)  # ФреймРейт
 
         cv2.imshow('python', image)
-        cv2.waitKey(1)  # Ждем 1 мс для обновления окна
+        cv2.waitKey(0)  # Ждем 1 мс для обновления окна
 
         return points
 
@@ -82,15 +82,21 @@ if __name__ == "__main__":
 
         
 
-        with open('dataset.csv', 'w', encoding='utf-8') as file:
+        with open('data.csv', 'w', encoding='utf-8') as file:
                 for z in range(num_images):
                     image_path = os.path.join(folder_path, image_names[z])
                     processed_points = process_image(image_path)
                     line = ""
                     vrem=image_names[z].split()
                     im=vrem[4].replace('.jpg', '')
+                    schet=0
                     for id in range(p):
                         line += f"{processed_points[0][id]},{processed_points[1][id]},"
+                        schet+=1
+                    if schet!=33:
+                        print(image_names[z])
+                        print(schet)
+                        break
                     """if im == "нейтральная":
                         im="нейтральное"
                     line+=f"{vrem[2]}, {im}"""
