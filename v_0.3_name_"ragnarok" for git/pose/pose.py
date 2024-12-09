@@ -1,4 +1,5 @@
 import numpy as np
+import csv
 
 class Perceptron:
     def __init__(self, learning_rate=0.01, n_iter=1000):
@@ -43,36 +44,63 @@ class Perceptron:
 
 # Пример использования
 if __name__ == "__main__":
+    with open('data.csv', mode='r') as file:
+        lines = file.readlines()
+        row_count = len(lines)
+
+
+
     # Пример данных: логическая операция AND
-    X = np.array([[0, 2.5],
-                  [1, 1],
-                  [2, -0.5],
-                  [3, -2],
-                  [4, -3.5],
-                  [5, -5],
-                  [-3, 7],
-                  [7, -8],
-                  [8, -9.5],
-                  [9, -11],
-                  [0, 2],
-                  [1, 0.5],
-                  [2, -1],
-                  [3, -2.5],
-                  [4, -4],
-                  [5, -5.5],
-                  [6, -7],
-                  [7, -8.5],
-                  [8, -10],
-                  [9, -11.5]])
-    y = np.array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])  # Результаты операции AND
+    x = np.zeros((row_count, 2))
+    
+    # Открываем файл data.csv
+    with open('data.csv', mode='r', newline='') as file:
+        reader = csv.reader(file)
+        
+        # Проходим по каждой строке в файле
+        i = 0
+        for row in reader:
+            print(len(row))
+            # Проверяем, что строка содержит достаточное количество элементов
+            if len(row) >= 2:
+                x[i][0] = float(row[6])  # первое значение
+                x[i][1] = float(row[7])  # второе значение
+                print(f'x1: {x[i][0]}, x2: {x[i][1]}')
+                i += 1
+
+    y = np.zeros(row_count)  # Результаты операции AND
+    with open('data.csv', mode='r', newline='') as file:
+        reader = csv.reader(file)
+        
+        # Проходим по каждой строке в файле
+        i = 0
+        for row in reader:
+            print(len(row))
+            # Проверяем, что строка содержит достаточное количество элементов
+            if len(row) >= 3:
+                vrem=row[66]
+                if vrem=='open':
+                    y[i] = 1
+                else:
+                    y[i]=0
+                print(y[i])
+                i += 1
     
     # Создание и обучение персептрона
-    p = Perceptron(learning_rate=0.1, n_iter=100)
-    p.fit(X, y)
+    p = Perceptron(learning_rate=0.1, n_iter=10000)
+    p.fit(x, y)
 
     # Прогнозирование
-    predictions = p.predict(X)
-    print("Predictions:", predictions)
+    predictions = p.predict(x)
+    
+    #print("Predictions:", predictions)
+    res=0
+    for z in range(0, len(predictions)):
+        print(f"{y[z]} | {predictions[z]}")
+        if y[z]==predictions[z]:
+            res+=1
+    print(f"{res}\{len(predictions)}")
 
     # Вывод уравнения
     p.print_equation()
+
