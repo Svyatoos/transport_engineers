@@ -1,5 +1,7 @@
 import threading
 from tkinter import *
+from tkinter import ttk
+import tkinter as tk
 import cv2
 from PIL import Image, ImageTk
 from serial.tools import list_ports
@@ -18,6 +20,10 @@ from sklearn.model_selection import train_test_split
 import tkinter as tk
 from tkinter import messagebox
 
+cam=0
+# Указание желаемого разрешения
+width = 1920
+height = 1080
 
 # Инициализация MediaPipe
 mp_drawing = mp.solutions.drawing_utils
@@ -225,7 +231,8 @@ for port, description in usb_ports.items():
 # Выбор камеры пользователем
 while True:
     try:
-        camera_index = int(input("Введите индекс камеры для использования: "))
+        #camera_index = int(input("Введите индекс камеры для использования: "))
+        camera_index = 0
         if camera_index in cameras:
             break
         else:
@@ -238,12 +245,13 @@ while True:
 
 
 
-
+camera_index=cam
 
 class MyVideoCapture:
-    def __init__(self, video_source=0):
+    def __init__(self, video_source=cam):
         # Открываем источник видео
         self.vid = cv2.VideoCapture(camera_index)
+       
         if not self.vid.isOpened():
             raise ValueError("Unable to open video source", video_source)
         
@@ -444,20 +452,6 @@ class App:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         if ret:
             # Преобразуем кадр в формат, подходящий для Tkinter
             self.photo = ImageTk.PhotoImage(image=Image.fromarray(resultImg))
@@ -486,8 +480,8 @@ def bbtg5():
 root = Tk()
 root['bg'] = '#fff'
 root.title('Программа для детектирования лица')
-root.geometry('1500x800')
-root.resizable(width=False, height=False)
+root.geometry('1000x800')
+root.resizable(width=True, height=True)
 
 # Фреймы
 frame1 = Frame(root, bg='white')
@@ -511,6 +505,27 @@ btn_analyze.place(relx=0.865, rely=0.199, relheight=0.05, relwidth=0.13)
 
 btn_alarm = Button(frame1, text='Тревога!', bg='red', command=bbtg5)
 btn_alarm.place(relx=0.865, rely=0.254, relheight=0.05, relwidth=0.13)
+
+
+#Выпадающие списки
+s = ["Выберите вебкамеру", '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+var = StringVar(value=s[0])   
+label = ttk.Label(textvariable=var)
+
+label.place(anchor=NW, relx=0.011, rely=0.04)
+combobox = ttk.Combobox(textvariable=var, values=s)
+combobox.place(relx=0.865, rely=0.822, relheight=0.05, relwidth=0.13)
+
+s2 = ["Выберите качество видео", "480p", "720p", "1080p (HD)", "1440p (FullHD)", "2K"]
+var2 = StringVar(value=s2[0])   
+label = ttk.Label(textvariable=var2)
+label.place(anchor=NW, relx=0.011, rely=0.07)
+combobox = ttk.Combobox(textvariable=var2, values=s2)
+combobox.place(relx=0.865, rely=0.878, relheight=0.05, relwidth=0.13)
+
+if var.get()!="Выберите вебкамеру":
+    cam=int(var.get())
+
 
 close_btn = Button(frame1, text='Закрыть', bg='gray', command=on_click)
 close_btn.place(relx=0.865, rely=0.934 ,relheight=0.05, relwidth=0.13)
