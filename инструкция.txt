@@ -1,0 +1,28 @@
+﻿ЫИнструкция по установке и запуску:
+последняя версия программы находится в папке v_0.3_name_"ragnarok"_for_git в папке GUI
+файл python это main.py 
+для запуска скачайте содержимое папки GUI после скачивания у вас обязательно в одной папке должны быть файлы data.csv, main.py, opencv_face_detector.pbtxt,     	opencv_face_detector_uint8.pb
+далее открываете файл main.py в вашей IDE у меня это VS code
+и устанавливаете нужные библиотеки:
+	1. opencv-python (для работы с OpenCV)
+	2. Pillow (для работы с изображениями)
+	3. pyserial (для работы с последовательным портом)
+	4. deepface (для анализа лиц)
+	5. matplotlib (для построения графиков)
+	6. numpy (для работы с массивами)
+	7. mediapipe (для обработки изображений и видео)
+	8. pandas (для работы с данными)
+	9. scikit-learn (для машинного обучения)
+
+Для этого поочередно введите команды в терминал:
+	pip install opencv-python
+	pip install Pillow
+	pip install pyserial
+	pip install deepface
+	pip install matplotlib
+	pip install numpy
+	pip install mediapipe
+	pip install pandas
+	pip install scikit-learn
+после успешной установки библиотек запускаем файл main.py можно выбрать камеру(по умолчанию стоит камера с индексом 0 если у вас одна камера то у неё будет такой индекс) и разрешение видео(в разработке)
+для закрытия программы нажмите закрыть.
